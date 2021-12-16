@@ -1,0 +1,34 @@
+name: '下载 jable 视频'
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'jable 影片网址'
+        required: true
+      random:
+        description: '随机下载热门影片'
+        options:
+          - "True"
+          - 'False'
+        required: false
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - id: dir-name
+        name: set dir name
+        run: basename '${{github.event.inputs.url}}' | xargs -I {} -n -1 echo '::set-output name=DIR_NAME::{}'
+      - uses: actions/checkout@v2
+        with:
+          repository: 'hcjohn463/JableTVDownload'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python main.py --url ${{github.event.inputs.url}}
+      - name: upload video
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: ./${{steps.dir-name.outputs.DIR_NAME}}
