@@ -17,7 +17,7 @@ jobs:
     steps:
       - id: dir-name
         name: set dir name
-        run: basename '${{github.event.inputs.url}}' | xargs -I {} -n -1 echo '::set-output name=DIR_NAME::{}'
+        run: basename '${{github.event.inputs.url}}' | xargs -I {} echo '::set-output name=DIR_NAME::{}'
       - uses: actions/checkout@v2
         with:
           repository: 'hcjohn463/JableTVDownload'
