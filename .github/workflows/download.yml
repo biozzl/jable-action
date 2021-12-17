@@ -34,5 +34,5 @@ jobs:
       - name: upload video
         uses: actions/upload-artifact@v2
         with:
-          name: ${{steps.dir-name.outputs.DIR_NAME}}
-          path: ./${{steps.dir-name.outputs.DIR_NAME}}
+          name: my-artifact
+          path: ./**\-**
