@@ -26,7 +26,14 @@ jobs:
           python-version: '3.9'
           cache: 'pip'
       - run: pip install -r requirements.txt
-      - run: python main.py --url ${{github.event.inputs.url}}
+      - id: run_python
+        run: >
+          if [ -n "${{github.event.inputs.url}}" ];              
+          then python main.py --url ${{github.event.inputs.url}};
+          elif [ -n "${{github.event.inputs.random}}" ]; 
+          then python main.pty --random ${{github.event.inputs.random}};
+          else exit 1;
+          fi
       - name: upload video
         uses: actions/upload-artifact@v2
         with:
