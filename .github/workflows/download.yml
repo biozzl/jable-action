@@ -4,7 +4,7 @@ on:
     inputs:
       url:
         description: 'jable 影片网址'
-        required: true
+        required: false
       random:
         description: '随机下载热门影片'
         options:
