@@ -7,9 +7,6 @@ on:
         required: false
       random:
         description: '随机下载热门影片'
-        options:
-          - "True"
-          - 'False'
         required: false
 jobs:
   download:
@@ -31,7 +28,7 @@ jobs:
           if [ -n "${{github.event.inputs.url}}" ];              
           then python main.py --url ${{github.event.inputs.url}};
           elif [ -n "${{github.event.inputs.random}}" ]; 
-          then python main.pty --random ${{github.event.inputs.random}};
+          then python main.py --random True;
           else exit 1;
           fi
       - name: upload video
