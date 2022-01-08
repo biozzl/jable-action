@@ -31,7 +31,21 @@ jobs:
           fi
       - name: Failed
         if: ${{ failure() }}
-        run: echo $(cat ./err.log)
+        run: |
+          if grep -q 'of \"ios\"' err.log;
+          curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/16351433/dispatches' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --header 'Authorization: token ${{ secrets.GH_PAT }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "ref": "main",
+              "inputs": {
+                  "url": "${{github.event.inputs.url}}",
+                  "random":"${{github.event.inputs.random}}"
+              }
+          }'
+          fi;
+          echo $(cat ./err.log)
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
