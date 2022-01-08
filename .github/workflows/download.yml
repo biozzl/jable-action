@@ -44,8 +44,7 @@ jobs:
                   "random":"${{github.event.inputs.random}}"
               }
           }'
-          fi;
-          echo $(cat ./err.log)
+          fi
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
