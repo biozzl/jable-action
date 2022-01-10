@@ -32,6 +32,7 @@ jobs:
       - name: Failed
         if: ${{ failure() }}
         run: |
+          echo "$(cat err.log)"
           if grep -q 'of \"ios\"' err.log;
           then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/16351433/dispatches' \
           --header 'Accept: application/vnd.github.v3+json' \
