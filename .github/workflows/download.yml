@@ -33,7 +33,11 @@ jobs:
         if: ${{ failure() && hashFiles('err.log')}}
         shell: sh
         run: |
-          echo "::error title=err::${$(cat err.log)//$'\n'/ }"
+          ERR_MSG=$(cat err.log)
+          echo "ERR_MSG<<EOF" >> $GITHUB_ENV
+          echo "$ERR_MSG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          echo "::error title=err::${{ env.ERR_MSG }}"
           if grep -q 'of \"ios\"' err.log;
           then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/16351433/dispatches' \
           --header 'Accept: application/vnd.github.v3+json' \
