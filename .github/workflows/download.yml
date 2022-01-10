@@ -22,7 +22,6 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Run
         id: run_python
-        continue-on-error: true
         run: >
           if [ -n "${{github.event.inputs.url}}" ];              
           then python main.py --url ${{github.event.inputs.url}} 2> ./err.log;
