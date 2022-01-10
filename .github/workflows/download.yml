@@ -29,14 +29,17 @@ jobs:
           then python main.py --random True 2> ./err.log;
           else exit 1;
           fi
-      - name: Failed
-        if: ${{ failure() && hashFiles('err.log')}}
-        shell: sh
+      - name: Collect Error
+        if : ${{ failure() && hashFiles('err.log') }}
         run: |
           ERR_MSG=$(cat err.log)
           echo "ERR_MSG<<EOF" >> $GITHUB_ENV
           echo "$ERR_MSG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+      - name: Failed
+        if: ${{ failure() && hashFiles('err.log')}}
+        shell: sh
+        run: |
           echo "::error title=err::${{ env.ERR_MSG }}"
           if grep -q 'of \"ios\"' err.log;
           then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/16351433/dispatches' \
