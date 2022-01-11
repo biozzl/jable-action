@@ -28,7 +28,7 @@ jobs:
           elif [ -n "${{github.event.inputs.random}}" ]; 
           then python main.py --random True 2> ./err.log;
           else exit 1;
-          fi
+          fi;
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Error
         if : ${{ failure() && hashFiles('err.log') }}
