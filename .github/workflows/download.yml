@@ -29,8 +29,8 @@ jobs:
           then python main.py --random True 2> ./err.log;
           else exit 1;
           fi
-      - name: Variable
-        id: var
+          echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Error
         if : ${{ failure() && hashFiles('err.log') }}
         run: |
           ERR_MSG=$(cat err.log)
@@ -38,7 +38,6 @@ jobs:
           ERR_MSG="${ERR_MSG//$'\n'/'%0A'}"
           ERR_MSG="${ERR_MSG//$'\r'/'%0D'}"
           echo "::error title=err::$ERR_MSG"
-          echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Retry
         if: ${{ failure() && hashFiles('err.log')}}
         shell: sh
@@ -59,5 +58,5 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{steps.var.outputs.date}}
+          tag_name: ${{steps.run_python.outputs.date}}
           files: ./**\-**/**
