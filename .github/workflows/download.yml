@@ -19,14 +19,12 @@ on:
         required: false
         type: string
 env: 
-  URL: ${{inputs.url || github.event.inputs.url}}
-  RANDOM: ${{inputs.random || github.event.inputs.random || ''}}
+  INPUT_URL: ${{inputs.url || github.event.inputs.url}}
+  INPUT_RANDOM: ${{inputs.random || github.event.inputs.random}}
 jobs:
   download:
     runs-on: ubuntu-latest
     steps:
-      - name: test
-        run: echo "$URL and $RANDOM ${{inputs.url || github.event.inputs.url}} ${{inputs.random || github.event.inputs.random}}"
       - uses: actions/checkout@v2
         with:
           repository: 'hcjohn463/JableTVDownload'
@@ -38,38 +36,31 @@ jobs:
       - name: Run
         id: run_python
         run: >
-          if [ -n "${{github.event.inputs.url}}" ];              
-          then python main.py --url ${{github.event.inputs.url}} 2> ./err.log;
-          elif [ -n "${{github.event.inputs.random}}" ]; 
+          if [ -n "${{env.INPUT_URL}}" ];              
+          then python main.py --url ${{env.INPUT_URL}} 2> ./err.log;
+          elif [ -n "${{env.INPUT_RANDOM}}" ]; 
           then python main.py --random True 2> ./err.log;
           else exit 1;
           fi;
           echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Error
+        id: error
         if : ${{ failure() && hashFiles('err.log') }}
         run: |
-          ERR_MSG=$(cat err.log)
-          ERR_MSG="${ERR_MSG//'%'/'%25'}"
-          ERR_MSG="${ERR_MSG//$'\n'/'%0A'}"
-          ERR_MSG="${ERR_MSG//$'\r'/'%0D'}"
-          echo "::error title=err::$ERR_MSG"
-      - name: Retry
-        if: ${{ failure() && hashFiles('err.log')}}
-        shell: sh
-        run: |
+          ERR_MSG=$(cat err.log) &&
+          ERR_MSG="${ERR_MSG//'%'/'%25'}" &&
+          ERR_MSG="${ERR_MSG//$'\n'/'%0A'}" &&
+          ERR_MSG="${ERR_MSG//$'\r'/'%0D'}" &&
+          echo "::error title=err::$ERR_MSG";
           if grep -q 'of \"ios\"' err.log;
-          then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/16351433/dispatches' \
-          --header 'Accept: application/vnd.github.v3+json' \
-          --header 'Authorization: token ${{ secrets.GH_PAT }}' \
-          --header 'Content-Type: application/json' \
-          --data-raw '{
-              "ref": "main",
-              "inputs": {
-                  "url": "${{github.event.inputs.url}}",
-                  "random":"${{github.event.inputs.random}}"
-              }
-          }'
+          echo "::set-output name=RETRY::true"
           fi
+      - name: Retry
+        if: ${{ steps.error.outputs.RETRY }}
+        uses: bxb100/jable-action/.github/workflows/download.yml@main
+        with:
+          url: ${{env.INPUT_URL}}
+          random: ${{env.INPUT_RANDOM}}
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
