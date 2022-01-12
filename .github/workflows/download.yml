@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo "$URL and $RANDOM ${{inputs.random}} ${{github.event.inputs.random}} ${{inputs.url}} ${{github.event.inputs.url}}"
+        run: echo "$URL and $RANDOM ${{inputs.url || github.event.inputs.url}} ${{inputs.random || github.event.inputs.random}}"
       - uses: actions/checkout@v2
         with:
           repository: 'hcjohn463/JableTVDownload'
