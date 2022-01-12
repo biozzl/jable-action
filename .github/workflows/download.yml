@@ -8,10 +8,22 @@ on:
       random:
         description: '随机下载热门影片'
         required: false
+  workflow_call:
+    inputs:
+      url:
+        description: 'jable 影片网址'
+        required: false
+        type: string
+      random:
+        description: '随机下载热门影片'
+        required: false
+        type: string
 jobs:
   download:
     runs-on: ubuntu-latest
     steps:
+      - name: test
+        run: echo ${{inputs.url || github.event.inputs.url}}
       - uses: actions/checkout@v2
         with:
           repository: 'hcjohn463/JableTVDownload'
