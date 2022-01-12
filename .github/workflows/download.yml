@@ -24,6 +24,8 @@ env:
 jobs:
   download:
     runs-on: ubuntu-latest
+    outputs:
+      retry: ${{ steps.error.outputs.RETRY }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -55,14 +57,14 @@ jobs:
           if grep -q 'of \"ios\"' err.log;
           echo "::set-output name=RETRY::true"
           fi
-      - name: Retry
-        if: ${{ steps.error.outputs.RETRY }}
-        uses: bxb100/jable-action/.github/workflows/download.yml@main
-        with:
-          url: ${{env.INPUT_URL}}
-          random: ${{env.INPUT_RANDOM}}
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{steps.run_python.outputs.date}}
           files: ./**\-**/**
+  retry:
+    if: ${{ jobs.download.outputs.retry }}
+    uses: bxb100/jable-action/.github/workflows/download.yml@main
+    with:
+      url: ${{env.INPUT_URL}}
+      random: ${{env.INPUT_RANDOM}}
