@@ -20,7 +20,7 @@ on:
         type: string
 env: 
   URL: ${{inputs.url || github.event.inputs.url}}
-  RANDOM: ${{inputs.random || github.event.inputs.random}}
+  RANDOM: ${{inputs.random || github.event.inputs.random || ''}}
 jobs:
   download:
     runs-on: ubuntu-latest
