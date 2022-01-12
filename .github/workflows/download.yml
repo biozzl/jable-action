@@ -18,12 +18,15 @@ on:
         description: '随机下载热门影片'
         required: false
         type: string
+env: 
+  URL: ${{inputs.url || github.event.inputs.url}}
+  RANDOM: ${{inputs.random || github.event.inputs.random}}
 jobs:
   download:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo ${{inputs.url || github.event.inputs.url}}
+        run: echo "$URL and $RANDOM"
       - uses: actions/checkout@v2
         with:
           repository: 'hcjohn463/JableTVDownload'
