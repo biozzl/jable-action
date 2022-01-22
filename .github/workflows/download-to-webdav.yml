@@ -1,0 +1,65 @@
+name: '下载 jable 视频'
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'jable 影片网址'
+        required: false
+      random:
+        description: '随机下载热门影片'
+        required: false
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: 'hcjohn463/JableTVDownload'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - name: Run
+        id: run_python
+        run: >
+          if [ -n "${{github.event.inputs.url}}" ];              
+          then python main.py --url ${{github.event.inputs.url}} 2> ./err.log;
+          elif [ -n "${{github.event.inputs.random}}" ]; 
+          then python main.py --random True 2> ./err.log;
+          else exit 1;
+          fi;
+          echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Error
+        if : ${{ failure() && hashFiles('err.log') }}
+        run: |
+          ERR_MSG=$(cat err.log)
+          ERR_MSG="${ERR_MSG//'%'/'%25'}"
+          ERR_MSG="${ERR_MSG//$'\n'/'%0A'}"
+          ERR_MSG="${ERR_MSG//$'\r'/'%0D'}"
+          echo "::error title=err::$ERR_MSG"
+#       - name: Retry
+#         if: ${{ failure() && hashFiles('err.log')}}
+#         shell: sh
+#         run: |
+#           if grep -q 'of \"ios\"' err.log;
+#           then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/16351433/dispatches' \
+#           --header 'Accept: application/vnd.github.v3+json' \
+#           --header 'Authorization: token ${{ secrets.GH_PAT }}' \
+#           --header 'Content-Type: application/json' \
+#           --data-raw '{
+#               "ref": "main",
+#               "inputs": {
+#                   "url": "${{github.event.inputs.url}}",
+#                   "random":"${{github.event.inputs.random}}"
+#               }
+#           }'
+#           fi
+      - name: Publish
+        uses: bxb100/action-upload-webdav@v1
+        with:
+          webdav_address: ${{secrets.address}}
+          webdav_username: ${{secrets.username}}
+          webdav_password: ${{secrets.password}}
+          webdav_upload_path: "/Video/AV"
+          files: ./**\-**/**
