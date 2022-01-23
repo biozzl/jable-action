@@ -1,4 +1,4 @@
-name: '下载 jable 视频'
+name: '下载 jable 视频并上传到 release 中'
 on:
   workflow_dispatch:
     inputs:
