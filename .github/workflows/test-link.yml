@@ -12,7 +12,7 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Publish
-        uses: bxb100/action-upload-webdav@v1
+        uses: bxb100/action-upload-webdav@main
         with:
           webdav_address: "http://100.90.96.54:5000"
           webdav_username: ${{secrets.username}}
