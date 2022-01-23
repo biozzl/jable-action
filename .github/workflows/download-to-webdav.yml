@@ -38,23 +38,23 @@ jobs:
           ERR_MSG="${ERR_MSG//$'\n'/'%0A'}"
           ERR_MSG="${ERR_MSG//$'\r'/'%0D'}"
           echo "::error title=err::$ERR_MSG"
-#       - name: Retry
-#         if: ${{ failure() && hashFiles('err.log')}}
-#         shell: sh
-#         run: |
-#           if grep -q 'of \"ios\"' err.log;
-#           then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/16351433/dispatches' \
-#           --header 'Accept: application/vnd.github.v3+json' \
-#           --header 'Authorization: token ${{ secrets.GH_PAT }}' \
-#           --header 'Content-Type: application/json' \
-#           --data-raw '{
-#               "ref": "main",
-#               "inputs": {
-#                   "url": "${{github.event.inputs.url}}",
-#                   "random":"${{github.event.inputs.random}}"
-#               }
-#           }'
-#           fi
+      - name: Retry
+        if: ${{ failure() && hashFiles('err.log')}}
+        shell: sh
+        run: |
+          if grep -q 'of \"ios\"' err.log;
+          then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/18427488/dispatches' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --header 'Authorization: token ${{ secrets.GH_PAT }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "ref": "main",
+              "inputs": {
+                  "url": "${{github.event.inputs.url}}",
+                  "random":"${{github.event.inputs.random}}"
+              }
+          }'
+          fi
       - name: Tailscale
         uses: tailscale/github-action@v1
         with:
