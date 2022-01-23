@@ -1,4 +1,4 @@
-name: '下载 jable 视频并发送到 WebDAV 中'
+name: '下载并发送到 WebDAV 中'
 on:
   workflow_dispatch:
     inputs:
