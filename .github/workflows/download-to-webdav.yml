@@ -55,10 +55,14 @@ jobs:
 #               }
 #           }'
 #           fi
+      - name: Tailscale
+        uses: tailscale/github-action@v1
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Publish
         uses: bxb100/action-upload-webdav@v1
         with:
-          webdav_address: http://60.166.105.51:5000
+          webdav_address: "http://100.90.96.54:5000"
           webdav_username: ${{secrets.username}}
           webdav_password: ${{secrets.password}}
           webdav_upload_path: "/Video/AV"
