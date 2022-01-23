@@ -29,6 +29,7 @@ jobs:
       - name: Retry
         shell: sh
         run: |
+          cd ${{ env.pwd }};
           if grep -q 'of \"ios\"' err.log;
           then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/${{inputs.workflow_id}}/dispatches' \
           --header 'Accept: application/vnd.github.v3+json' \

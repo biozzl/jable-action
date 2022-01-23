@@ -18,13 +18,17 @@ on:
 
 jobs:
   setup:
-    name: Pass input and secrets to my-action
+    name: Setup environment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           repository: 'hcjohn463/JableTVDownload'
+      - id: pwd
+        run: echo "::set-output name=pwd::$(pwd)"
       - uses: actions/setup-python@v2
+        env:
+          pwd: ${{ steps.pwd.outputs.pwd }}
         with:
           python-version: '3.9'
           cache: 'pip'
@@ -37,6 +41,7 @@ jobs:
     steps:
       - name: Run
         run: >
+          cd ${{ env.pwd }};
           if [ -n "${{inputs.url}}" ];              
           then python main.py --url ${{inputs.url}} 2> ./err.log;
           elif [ -n "${{inputs.random}}" ]; 
