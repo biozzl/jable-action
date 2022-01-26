@@ -72,5 +72,5 @@ jobs:
           webdav_password: ${{secrets.password}}
           webdav_upload_path: "/Video/AV"
           files: |
-            "*-*/*"
-            "!*-*/*.jpg"
+            *-*/*
+            !*-*/*.jpg
