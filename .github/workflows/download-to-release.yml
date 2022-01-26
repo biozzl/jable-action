@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check input
-        if: ${{ inputs.url == '' && inputs.random == '' }}
+        if: ${{ github.event.inputs.url == '' && github.event.inputs.random == '' }}
         run: |
           echo '::error title=⛔️ ERROR::请输入至少一个参数'
       - uses: actions/checkout@v2
