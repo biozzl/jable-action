@@ -1,0 +1,18 @@
+name: test link
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Config Tailscale
+      uses: tailscale/github-action@ecdb6a2aed7b74d1c8ec0c78fbd76a84b9809b28
+      with:
+        authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+    - run: |
+        tailscale netcheck;
+        tailscale ping jojo-nas-one;
+        tailscale ping 100.90.96.54
+      
