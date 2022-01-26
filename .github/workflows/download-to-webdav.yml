@@ -25,6 +25,10 @@ jobs:
           python-version: '3.9'
           cache: 'pip'
       - run: pip install -r requirements.txt
+      - name: Config Tailscale
+        uses: tailscale/github-action@ecdb6a2aed7b74d1c8ec0c78fbd76a84b9809b28
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Run
         id: run_python
         run: >
@@ -60,10 +64,6 @@ jobs:
               }
           }'
           fi
-      - name: Tailscale
-        uses: tailscale/github-action@ecdb6a2aed7b74d1c8ec0c78fbd76a84b9809b28
-        with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Publish
         timeout-minutes: 30
         uses: bxb100/action-upload-webdav@v1
