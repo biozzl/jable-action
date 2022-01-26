@@ -61,7 +61,7 @@ jobs:
           }'
           fi
       - name: Tailscale
-        uses: tailscale/github-action@v1
+        uses: tailscale/github-action@ecdb6a2aed7b74d1c8ec0c78fbd76a84b9809b28
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Publish
