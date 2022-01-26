@@ -65,6 +65,7 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Publish
+        timeout-minutes: 30
         uses: bxb100/action-upload-webdav@v1
         with:
           webdav_address: "http://jojo-nas-one:5999"
