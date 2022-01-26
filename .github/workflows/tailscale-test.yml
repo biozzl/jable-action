@@ -15,7 +15,5 @@ jobs:
         tailscale netcheck;
         tailscale ping jojo-nas-one;
         tailscale ping 100.90.96.54;
-        do
-          sleep 60s;
-        done
+        sleep 60
       
