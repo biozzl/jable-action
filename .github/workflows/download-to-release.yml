@@ -12,6 +12,10 @@ jobs:
   download:
     runs-on: ubuntu-latest
     steps:
+      - name: Check input
+        if: ${{ inputs.url == '' && inputs.random == '' }}
+        run: |
+          echo '::error title=⛔️ ERROR::请输入至少一个参数'
       - uses: actions/checkout@v2
         with:
           repository: 'hcjohn463/JableTVDownload'
