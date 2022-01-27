@@ -1,7 +1,9 @@
-<h1 align="center">Jable action</h1>
+<h1 align="center">Jable Action</h1>
 <p align="center">
-使用 action 和 https://github.com/hcjohn463/JableTVDownload 来上传至 release 或 webdav 中
+使用 action 和 JableTVDownload 来下载视频上传至 release 或 webdav 中
 </p>
+
+> 🖱️ 点击仓库右上角 Use this template 稍加修改使用
 
 # Config
 
@@ -61,10 +63,25 @@ TL;DR 下载之后上传到 webdav 中，使用 tailscale 当做中转（速度�
 
 2. `https://api.github.com/repos/bxb100/jable-action/actions/workflows/18472383/dispatches`
 
+获取你仓库下 workflow 的 id，然后替换 `用户：bxb100` `仓库名：jable-taction` 和 `workflow id：18472383`。
+
 > API 文档：https://docs.github.com/en/rest/reference/actions#list-repository-workflows
 
 
-获取你仓库下 workflow 的 id，然后替换 `用户：bxb100` `仓库名：jable-taction` 和 `workflow id：18472383`。
 
 
+
+----
+
+
+<p align="center"> 
+  🤝 友情提醒：小撸怡情，大撸伤身
+</p>
+
+<p align="right">
+  ©️ 使用以下程序驱动 <br>
+  https://github.com/hcjohn463/JableTVDownload <br>
+  https://github.com/bxb100/action-upload-webdav <br>
+  https://github.com/tailscale/github-action <br>
+</p>
 
