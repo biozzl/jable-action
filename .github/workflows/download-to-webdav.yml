@@ -28,7 +28,7 @@ jobs:
       - name: Run
         id: run_python
         run: >
-          if [ -n "${{github.event.inputs.url}}" ];              
+          if [ -n "${{github.event.inputs.url}}" ];
           then python main.py --url ${{github.event.inputs.url}} 2> ./err.log;
           elif [ -n "${{github.event.inputs.random}}" ]; 
           then python main.py --random True 2> ./err.log;
