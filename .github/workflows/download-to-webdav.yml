@@ -25,10 +25,6 @@ jobs:
           python-version: '3.9'
           cache: 'pip'
       - run: pip install -r requirements.txt
-      - name: Config Tailscale
-        uses: tailscale/github-action@ecdb6a2aed7b74d1c8ec0c78fbd76a84b9809b28
-        with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Run
         id: run_python
         run: >
@@ -48,11 +44,11 @@ jobs:
           ERR_MSG="${ERR_MSG//$'\r'/'%0D'}"
           echo "::error title=err::$ERR_MSG"
       - name: Retry
-        if: ${{ failure() && hashFiles('err.log')}}
+        if: ${{ failure() && hashFiles('err.log') && secrets.dav_workflow_id != '' }}
         shell: sh
         run: |
           if grep -q 'of \"ios\"' err.log;
-          then curl --location --request POST 'https://api.github.com/repos/${{github.repository}}/actions/workflows/18427488/dispatches' \
+          then curl --location --request POST 'https://api.github.com/repos/${{github.repository}}/actions/workflows/${{secrets.dav_workflow_id}}/dispatches' \
           --header 'Accept: application/vnd.github.v3+json' \
           --header 'Authorization: token ${{ secrets.GH_PAT }}' \
           --header 'Content-Type: application/json' \
@@ -64,6 +60,11 @@ jobs:
               }
           }'
           fi
+      - name: Config Tailscale
+        uses: tailscale/github-action@ecdb6a2aed7b74d1c8ec0c78fbd76a84b9809b28
+        if: ${{secrets.TAILSCALE_AUTHKEY!=''}}
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Publish
         timeout-minutes: 30
         uses: bxb100/action-upload-webdav@v1
