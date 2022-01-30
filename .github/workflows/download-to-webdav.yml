@@ -52,7 +52,7 @@ jobs:
         shell: sh
         run: |
           if grep -q 'of \"ios\"' err.log;
-          then curl --location --request POST 'https://api.github.com/repos/bxb100/jable-action/actions/workflows/18427488/dispatches' \
+          then curl --location --request POST 'https://api.github.com/repos/${{github.repository}}/actions/workflows/18427488/dispatches' \
           --header 'Accept: application/vnd.github.v3+json' \
           --header 'Authorization: token ${{ secrets.GH_PAT }}' \
           --header 'Content-Type: application/json' \
