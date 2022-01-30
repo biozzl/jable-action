@@ -16,7 +16,7 @@ TL;DR 下载之后上传到 release 中，tag 为当前日期
 
 ## download-to-webdav
 
-TL;DR 下载之后上传到 webdav 中，使用 tailscale 当做中转（速度较慢）（action runner 不能连接到家庭公网 ip）（懒得配置 frp）
+TL;DR 下载之后上传到 webdav 中(时间限制 30 minutes），使用 tailscale 当做中转（速度较慢）（action runner 不能连接到家庭公网 ip）（懒得配置 frp）
 
 1. 【可选】需要重新配置 `retry` [步骤](#重试)
 2. 【可选】`${{ secrets.TAILSCALE_AUTHKEY }}` tailscale 的秘钥，参看 https://github.com/tailscale/github-action
