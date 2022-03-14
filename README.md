@@ -28,7 +28,7 @@ TL;DR 下载之后上传到 webdav 中(时间限制 30 minutes），使用 tails
 
 测试 tailscale 连接是否正常
 
-## 🔽download-to-release
+## 🔽download-to-release2
 
 使用 [N_m3u8DL-CLI](https://github.com/nilaoda/N_m3u8DL-CLI) 直接下载视频页面的 m3u8 合并成 mp4 上传至 release 中
 
@@ -61,16 +61,26 @@ TL;DR 下载之后上传到 webdav 中(时间限制 30 minutes），使用 tails
 
 1. `${{ secrets.GH_PAT }}`
 
+<details>
+<summary>详情</summary>
+<br>
 申请一个 token，注意需要 Update GitHub Action workflows 的权限，[放到 secrets 中](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
 
 ![image](https://user-images.githubusercontent.com/20685961/151335371-0dbc2f04-25bf-455a-b33e-4d001561798a.png)
 
+</details>
+
+
 2. `https://api.github.com/repos/${{github.repository}}/actions/workflows/${{secrets.xxx_workflow_id}}/dispatches`
 
+<details>
+<summary>详情</summary>
+<br>
 获取你仓库下当前的 workflow 的 id，然后添加到 secrets 中，注意不同 yaml 文件中对应的名称不同。
 
 > API 文档：https://docs.github.com/en/rest/reference/actions#list-repository-workflows
 
+</details>
 
 
 ----
