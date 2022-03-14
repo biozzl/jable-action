@@ -20,8 +20,6 @@ jobs:
           7z x N_m3u8DL-CLI.zip
           Invoke-WebRequest -Uri "https://gist.githubusercontent.com/bxb100/c7a50dbf048b1d62e6939feee6cbab1c/raw/6bce6516bd5cabb4e02ac7737f61b244818c9569/execute.cmd" -OutFile execute.cmd
           .\execute.cmd ${{ github.event.inputs.url }}
-          pwd
-          ls
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
