@@ -1,6 +1,6 @@
 <h1 align="center">Jable Action</h1>
 <p align="center">
-使用 action 和 JableTVDownload 来下载视频上传至 release 或 webdav 中
+使用 action 来下载 Jable 视频上传至 release 或 webdav 中
 </p>
 
 > 🖱️ 点击仓库右上角 Use this template 稍加修改使用
