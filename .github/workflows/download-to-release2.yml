@@ -13,13 +13,13 @@ jobs:
         if: ${{ github.event.inputs.url == '' }}
         run: |
           echo '::error title=⛔️ ERROR::请输入链接'
-      - run: Invoke-WebRequest -Uri "https://github.com/bxb100/N_m3u8DL-CLI/releases/download/2.9.9/N_m3u8DL-CLI.zip" -OutFile N_m3u8DL-CLI.zip
       - id: cx
+        name: Download
         run: |
           echo "::set-output name=date::$(get-date -format 'yyyy-MM-dd')"
-          7z x N_m3u8DL-CLI.zip
-          Invoke-WebRequest -Uri "https://gist.githubusercontent.com/bxb100/c7a50dbf048b1d62e6939feee6cbab1c/raw/6bce6516bd5cabb4e02ac7737f61b244818c9569/execute.cmd" -OutFile execute.cmd
-          .\execute.cmd ${{ github.event.inputs.url }}
+          $uri = '${{ github.event.inputs.url }}'
+          iwr -Uri "https://raw.githubusercontent.com/${{github.repository}}/main/execute.ps1" | iex
+        shell: pwsh
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
