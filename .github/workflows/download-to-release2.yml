@@ -18,7 +18,7 @@ jobs:
         run: |
           echo "::set-output name=date::$(get-date -format 'yyyy-MM-dd')"
           $uri = '${{ github.event.inputs.url }}'
-          iwr -Uri "https://raw.githubusercontent.com/${{github.repository}}/main/execute.ps1" | iex
+          iwr -Uri "https://raw.githubusercontent.com/bxb100/OSS-Script/main/Win/execute.ps1" | iex
         shell: pwsh
       - name: Publish
         uses: softprops/action-gh-release@v1
