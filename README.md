@@ -7,14 +7,20 @@
 
 # 🧑‍🚀Action Workflow Config 
 
-## 🔽download-to-release
+> 📝 需要配置, 推荐使用 🌟download-to-release2, Zero config
+
+## 🌟download-to-release2
+
+使用 [N_m3u8DL-CLI](https://github.com/nilaoda/N_m3u8DL-CLI) 直接下载视频页面的 m3u8 合并成 mp4 上传至 release 中
+
+## 📝download-to-release
 
 TL;DR 下载之后上传到 release 中，tag 为当前日期
 
 * 【可选】其中主要的配置的部分是 `retry` [步骤](#retry)
 
 
-## 🔽download-to-webdav
+## 📝download-to-webdav
 
 TL;DR 下载之后上传到 webdav 中(时间限制 30 minutes），使用 tailscale 当做中转（速度较慢）（action runner 不能连接到家庭公网 ip）（懒得配置 frp）
 
@@ -24,18 +30,14 @@ TL;DR 下载之后上传到 webdav 中(时间限制 30 minutes），使用 tails
 4. `${{secrets.username}}` webdav 的用户名，[放到 secrets 中](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
 5. `${{secrets.password}}` webdav 的密码，[放到 secrets 中](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
 
-## 🔽tailscale-test
+## 🍮tailscale-test
 
 测试 tailscale 连接是否正常
 
-## 🔽download-to-release2
-
-使用 [N_m3u8DL-CLI](https://github.com/nilaoda/N_m3u8DL-CLI) 直接下载视频页面的 m3u8 合并成 mp4 上传至 release 中
-
-# 🧮Parameter Details
+# 🌏Other Details
 
 <a id="retry"></a>
-## 🪗重试
+## 🔙Retry Step
 
 ```yaml
 - name: Retry
@@ -57,7 +59,7 @@ TL;DR 下载之后上传到 webdav 中(时间限制 30 minutes），使用 tails
 ```
 
 主要作用是当前面产生 `Sorry "firefox" browser was not found with a platform of "ios"` 错误的时候重新调用 workflow，如果不需要可以直接注释
-### 🔐重新配置
+### 🔐Env Parameter
 
 1. `${{ secrets.GH_PAT }}`
 
