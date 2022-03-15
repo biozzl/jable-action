@@ -17,7 +17,7 @@ jobs:
         name: Download
         run: |
           echo "::set-output name=date::$(get-date -format 'yyyy-MM-dd')"
-          $uri = '${{ github.event.inputs.url }}'
+          $env:uri = '${{ github.event.inputs.url }}'
           iwr -Uri "https://raw.githubusercontent.com/bxb100/OSS-Config/main/Win/execute.ps1" | iex
         shell: pwsh
       - name: Publish
